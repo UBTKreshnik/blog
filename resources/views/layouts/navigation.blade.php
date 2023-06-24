@@ -12,9 +12,15 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-nav-link :href="route('blogs.index')" :active="request()->routeIs('blogs.index')">
+                        {{ __('Blogs') }}
                     </x-nav-link>
+                    @if (Auth::user()->role->value === App\Enums\UserRoles::Creator->value)
+                        
+                    <x-nav-link :href="route('blogs.create')" :active="request()->routeIs('blogs.create')">
+                        {{ __('Create Blog') }}
+                    </x-nav-link>
+                    @endif                    
                 </div>
             </div>
 
