@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogsController;
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,9 +32,11 @@ Route::controller(BlogsController::class)->as('blogs.')->group(
         Route::get('/show/{id}', 'show')->name('show');
         Route::post('/store', 'store')->name('store');
         Route::put('/update', 'update')->name('update');
-        Route::delete('/delete/{$id}', 'delete')->name('delete');
+        Route::delete('/delete', 'delete')->name('delete');
     }
 )->middleware(['auth', 'verified']);
+
+Route::post('/comments', [CommentsController::class, 'store'])->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

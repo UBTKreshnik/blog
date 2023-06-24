@@ -50,9 +50,9 @@ class BlogsController extends Controller
      */
     public function show(int $id)
     {
-        $blog = Blogs::findOrFail($id);
+        $blog = Blogs::with(['comments', 'comments.user'])->where('id', $id)->firstOrFail();
         $content = $blog->markdown_body;
-        return view('blogs.show', ['content' => $content, 'title' => $blog->title]);
+        return view('blogs.show', ['content' => $content, 'title' => $blog->title, 'comments' => $blog->comments, 'id' => $blog->id]);
     }
 
     /**
@@ -89,10 +89,11 @@ class BlogsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(Request $request)
     {
-        $blog = Blogs::findOrFail($id);
+        $blog = Blogs::findOrFail($request->id);
+        $blog->comments()->delete();
         $blog->delete();
-        return redirect('blogs.index');
+        return redirect('/index');
     }
 }
