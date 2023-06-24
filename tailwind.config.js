@@ -17,5 +17,9 @@ export default {
         },
     },
 
+    corePlugins: {
+        fontSize: false, // Exclude font size-related styles
+    },
+
     plugins: [forms],
 };
