@@ -15,13 +15,27 @@
                     </div>
                 </a>                
             </div>
+            @if (Auth::user()->role->value === App\Enums\UserRoles::Creator->value)
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg hover:bg-sky-500 border-2 max-w-max min-w-max">
                 <a href="{{ route('blogs.edit', ['id' => $blog->id]) }}">
                     <div class="p-6 text-gray-900">
                         {{ __('Edit') }}
                     </div>
                 </a>
+            </div>
+            <div class="overflow-hidden shadow-sm sm:rounded-lg  border-2 max-w-max min-w-max">
+                <form id="{{ 'delete'.$blog->id }}" method="POST" action="{{ route('blogs.delete')   }}" >
+                    @csrf
+                    @method('DELETE')
+                    <input name="id" type="hidden" value="{{ $blog->id }}">
+                    
+                    <x-primary-button class="py-6 text-gray-900 hover:bg-red-500">
+                        {{ __('Delete') }}
+                    </x-primary-button>
+
+                </form> 
             </div>        
+            @endif
         </div>
 
         @endforeach
