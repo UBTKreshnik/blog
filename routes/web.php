@@ -16,14 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::controller(BlogsController::class)->as('blogs.')->group(
     function () {
         Route::get('/index', 'index')->name('index');
@@ -36,7 +28,8 @@ Route::controller(BlogsController::class)->as('blogs.')->group(
     }
 )->middleware(['auth', 'verified']);
 
-Route::post('/comments', [CommentsController::class, 'store'])->middleware(['auth', 'verified']);
+Route::post('/comments
+', [CommentsController::class, 'store'])->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
